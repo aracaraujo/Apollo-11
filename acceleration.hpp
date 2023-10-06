@@ -7,6 +7,7 @@
 
 #ifndef acceleration_hpp
 #define acceleration_hpp
+#pragma once
 
 #include <stdio.h>
 #include "angle.h"
@@ -21,7 +22,6 @@ class Acceleration
 {
 public:
     Acceleration();
-    
     // Default constructor.
     Acceleration(Angle angle);
     

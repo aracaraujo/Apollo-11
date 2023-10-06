@@ -45,7 +45,7 @@ void Star::setPhase(int newPhase){
 }
 
 // Get Position.
-int Star::getPhase(){
+unsigned char Star::getPhase(){
     return this->phase;
 }
 

@@ -10,6 +10,7 @@
 #include "ground.h"
 #include "angle.h"
 #include "lander.hpp"
+
 using namespace std;
 
 /*************************************************************************
@@ -63,9 +64,11 @@ void callBack(const Interface *pUI, void * p)
         pDemo->lander.rotateLander(0.1);
     }
    if (pUI->isUp())
-      pDemo->ptLM.addY(-1.0);
+       pDemo->lander.moveUp();
+//      pDemo->ptLM.addY(-1.0);
    if (pUI->isDown())
-      pDemo->ptLM.addY(1.0);
+       pDemo->lander.moveDown();
+//      pDemo->ptLM.addY(1.0);
 
    // draw the ground
    pDemo->ground.draw(gout);
@@ -77,7 +80,7 @@ void callBack(const Interface *pUI, void * p)
 
    // put some text on the screen
    gout.setPosition(Point(30.0, 30.0));
-   //gout << "Demo (" << (int)pDemo->ptLM.getX() << ", " << (int)pDemo->ptLM.getY() << ")" << "\n";
+   gout << "Demo (" << (int)pDemo->lander.getPosition().getX() << ", " << (int)pDemo->lander.getPosition().getY() << ")" << "\n";
 
    // draw our little star
    gout.drawStar(pDemo->ptStar, pDemo->phase++);
