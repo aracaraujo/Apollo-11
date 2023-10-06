@@ -38,12 +38,12 @@ public:
     void setPhase(int newPhase);
     
     // Get Position.
-    int getPhase();
+    unsigned char  getPhase();
     
 private:
     Point position;
     
     int width = 5;
     
-    int phase;
+     unsigned char phase;
 };

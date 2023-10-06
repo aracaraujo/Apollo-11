@@ -20,6 +20,7 @@
 class Acceleration
 {
 public:
+    Acceleration();
     // Default constructor.
     Acceleration(Angle angle);
     
