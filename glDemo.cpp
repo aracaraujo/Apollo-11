@@ -8,6 +8,7 @@
 #include "uiInteract.h"
 #include "uiDraw.h"
 #include "ground.h"
+#include "angle.h"
 using namespace std;
 
 /*************************************************************************
@@ -18,7 +19,7 @@ class Demo
 {
 public:
    Demo(const Point& ptUpperRight) :
-          angle(0.0),
+          angle(Angle()),
           ptStar(ptUpperRight.getX() - 20.0, ptUpperRight.getY() - 20.0),
           ptLM(ptUpperRight.getX() / 2.0, ptUpperRight.getY() / 2.0),
           ground(ptUpperRight)
@@ -30,7 +31,7 @@ public:
    // this is just for test purposes.  Don't make member variables public!
    Point ptLM;           // location of the LM on the screen
    Point ptUpperRight;   // size of the screen
-   double angle;         // angle the LM is pointing
+   Angle angle;         // angle the LM is pointing
    unsigned char phase;  // phase of the star's blinking
    Ground ground;
    Point ptStar;
@@ -52,10 +53,14 @@ void callBack(const Interface *pUI, void * p)
    Demo * pDemo = (Demo *)p;  
 
    // move the ship around
-   if (pUI->isRight())
-      pDemo->angle -= 0.1;
-   if (pUI->isLeft())
-      pDemo->angle += 0.1;
+    if (pUI->isRight()){
+        double currentRadians = pDemo->angle.getRadians();
+        pDemo->angle.setRadians(currentRadians - 0.1);
+    }
+    if (pUI->isLeft()){
+        double currentRadians = pDemo->angle.getRadians();
+        pDemo->angle.setRadians(currentRadians + 0.1);
+    }
    if (pUI->isUp())
       pDemo->ptLM.addY(-1.0);
    if (pUI->isDown())
@@ -65,8 +70,8 @@ void callBack(const Interface *pUI, void * p)
    pDemo->ground.draw(gout);
 
    // draw the lander and its flames
-   gout.drawLander(pDemo->ptLM /*position*/, pDemo->angle /*angle*/);
-   gout.drawLanderFlames(pDemo->ptLM, pDemo->angle, /*angle*/
+   gout.drawLander(pDemo->ptLM /*position*/, pDemo->angle.getRadians() /*angle*/);
+   gout.drawLanderFlames(pDemo->ptLM, pDemo->angle.getRadians(), /*angle*/
                     pUI->isDown(), pUI->isLeft(), pUI->isRight());
 
    // put some text on the screen
