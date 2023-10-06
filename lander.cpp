@@ -18,7 +18,7 @@ Lander::Lander() {
 Lander::Lander(Point position) {
     this->position = position;
     this->angle = Angle();
-    this->acceleration = Acceleration(angle);
+    this->acceleration = Acceleration();
     this->velocity = Velocity();
     this->tank = Fuel();
 }
