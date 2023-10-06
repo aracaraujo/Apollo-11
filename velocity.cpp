@@ -68,3 +68,30 @@ double Velocity::computeHorizontalVelocity(Angle angle) {
     return horizontalVelocity;
     
 }
+
+// Setters
+void Velocity::setVerticalVelocity(double verticalVelocity) {
+    this->verticalVelocity = verticalVelocity;
+}
+
+void Velocity::setHorizontalVertical(double horizontalVelocity) {
+    this->horizontalVelocity = horizontalVelocity;
+}
+
+void Velocity::setTotalVelocity(double totalVelocity) {
+    this->totalVelocity = totalVelocity;
+}
+
+
+// Getters
+double Velocity::getVerticalVelocity() const {
+    return verticalVelocity;
+}
+
+double Velocity::getHorizontalVelocity() const {
+    return horizontalVelocity;
+}
+
+double Velocity::getTotalVelocity() const {
+    return totalVelocity;
+}
