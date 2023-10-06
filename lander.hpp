@@ -43,6 +43,8 @@ public:
     void setTank(Fuel tank);
     
     void updatePosition();
+    void moveUp();
+    void moveDown();
     void updateAcceleration();
     void burnFuel(double fuel);
     void rotateLander(double angle);

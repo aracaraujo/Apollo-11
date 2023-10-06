@@ -54,3 +54,9 @@ void Lander::rotateLander(double angle) {
     this->angle.setRadians(currentRadians - angle);
 }
 double computeDistance(double positionComponent, double velocityComponent);
+void Lander::moveUp(){
+    this->position.addY(-1.0);
+}
+void Lander::moveDown(){
+    this->position.addY(1.0);
+}
