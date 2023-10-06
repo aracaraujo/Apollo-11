@@ -16,6 +16,7 @@
 		C1D4EAED2577F57B002B56E3 /* uiInteract.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1D4EAE52577F576002B56E3 /* uiInteract.cpp */; };
 		C1D4EAF22577F58C002B56E3 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D4EAF02577F58C002B56E3 /* GLUT.framework */; };
 		C1D4EAF32577F58C002B56E3 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D4EAF12577F58C002B56E3 /* OpenGL.framework */; };
+		FB529D2B2AD093C700E50D77 /* velocity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB529D292AD093C700E50D77 /* velocity.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +49,8 @@
 		C1D4EAE82577F57A002B56E3 /* ground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ground.h; sourceTree = "<group>"; };
 		C1D4EAF02577F58C002B56E3 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		C1D4EAF12577F58C002B56E3 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		FB529D292AD093C700E50D77 /* velocity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = velocity.cpp; sourceTree = "<group>"; };
+		FB529D2A2AD093C700E50D77 /* velocity.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = velocity.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +69,8 @@
 		C1D4EACA2577F487002B56E3 = {
 			isa = PBXGroup;
 			children = (
+				FB529D292AD093C700E50D77 /* velocity.cpp */,
+				FB529D2A2AD093C700E50D77 /* velocity.hpp */,
 				69FE38952AD08CE60015FD6C /* fuel.cpp */,
 				69FE38962AD08CE60015FD6C /* fuel.hpp */,
 				69B950822ACF5AC4005B6FE0 /* angle.h */,
@@ -162,6 +167,7 @@
 				C1D4EAEA2577F57B002B56E3 /* point.cpp in Sources */,
 				C1D4EAE92577F57B002B56E3 /* uiDraw.cpp in Sources */,
 				C1D4EAEC2577F57B002B56E3 /* ground.cpp in Sources */,
+				FB529D2B2AD093C700E50D77 /* velocity.cpp in Sources */,
 				C1D4EAEB2577F57B002B56E3 /* glDemo.cpp in Sources */,
 				69FE38972AD08CE60015FD6C /* fuel.cpp in Sources */,
 				69B385052ACF48EE005CEFEC /* acceleration.cpp in Sources */,
