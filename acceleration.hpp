@@ -21,6 +21,10 @@ class Acceleration
 {
 public:
     Acceleration();
+<<<<<<< HEAD
+=======
+    
+>>>>>>> refs/remotes/origin/main
     // Default constructor.
     Acceleration(Angle angle);
     

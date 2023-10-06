@@ -2,7 +2,7 @@
 //  star.hpp
 //  Lab03
 //
-//  Created by Ara Cantanhede Araujo on 10/6/23.
+//  Created by Ara Cantanhede Araujo on 10/6/23./Users/wadewithers/Desktop/Fall 2023/Encapsulation Design/Apollo-11/acceleration.hpp
 //
 
 #ifndef star_hpp

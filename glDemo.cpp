@@ -9,6 +9,7 @@
 #include "uiDraw.h"
 #include "ground.h"
 #include "angle.h"
+#include "lander.hpp"
 using namespace std;
 
 /*************************************************************************
@@ -35,6 +36,7 @@ public:
    unsigned char phase;  // phase of the star's blinking
    Ground ground;
    Point ptStar;
+   Lander lander = Lander(ptLM);
 };
 
 /*************************************
@@ -54,12 +56,11 @@ void callBack(const Interface *pUI, void * p)
 
    // move the ship around
     if (pUI->isRight()){
-        double currentRadians = pDemo->angle.getRadians();
-        pDemo->angle.setRadians(currentRadians - 0.1);
+        
+        pDemo->lander.rotateLander(-0.1);
     }
     if (pUI->isLeft()){
-        double currentRadians = pDemo->angle.getRadians();
-        pDemo->angle.setRadians(currentRadians + 0.1);
+        pDemo->lander.rotateLander(0.1);
     }
    if (pUI->isUp())
       pDemo->ptLM.addY(-1.0);
@@ -70,13 +71,13 @@ void callBack(const Interface *pUI, void * p)
    pDemo->ground.draw(gout);
 
    // draw the lander and its flames
-   gout.drawLander(pDemo->ptLM /*position*/, pDemo->angle.getRadians() /*angle*/);
-   gout.drawLanderFlames(pDemo->ptLM, pDemo->angle.getRadians(), /*angle*/
+    gout.drawLander(pDemo->lander.getPosition() /*position*/, pDemo->lander.getAngle().getRadians() /*angle*/);
+   gout.drawLanderFlames(pDemo->lander.getPosition(), pDemo->lander.getAngle().getRadians(), /*angle*/
                     pUI->isDown(), pUI->isLeft(), pUI->isRight());
 
    // put some text on the screen
    gout.setPosition(Point(30.0, 30.0));
-   gout << "Demo (" << (int)pDemo->ptLM.getX() << ", " << (int)pDemo->ptLM.getY() << ")" << "\n";
+   //gout << "Demo (" << (int)pDemo->ptLM.getX() << ", " << (int)pDemo->ptLM.getY() << ")" << "\n";
 
    // draw our little star
    gout.drawStar(pDemo->ptStar, pDemo->phase++);
@@ -108,7 +109,7 @@ int main(int argc, char ** argv)
    Demo demo(ptUpperRight);
 
    // set everything into action
-   ui.run(callBack, &demo);             
+   ui.run(callBack, &demo);
 
    return 0;
 }

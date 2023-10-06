@@ -9,7 +9,10 @@
 #include <cmath>
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/main
 Acceleration::Acceleration(){
     setAcceleration(0.0);
     setVerticalAcceleration(Angle());
@@ -17,6 +20,10 @@ Acceleration::Acceleration(){
     // Set horizontal accelertaion.
     setHorizontalAcceleration(Angle());
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/main
 /*********************************************************************
  * ACCELERATION constructor
  * This is the default constructor of the acceleration class.
