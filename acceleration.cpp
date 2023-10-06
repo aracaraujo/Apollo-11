@@ -9,6 +9,14 @@
 #include <cmath>
 
 
+Acceleration::Acceleration(){
+    setAcceleration(0.0);
+    setVerticalAcceleration(Angle());
+    
+    // Set horizontal accelertaion.
+    setHorizontalAcceleration(Angle());
+}
+
 /*********************************************************************
  * ACCELERATION constructor
  * This is the default constructor of the acceleration class.
