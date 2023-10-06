@@ -22,16 +22,11 @@ public:
     Fuel(double fuel);
     
     // Set fuel.
-    void setFuel(double newFuel);
+    void set(double newFuel);
     
     // Get fuel.
-    double getFuel();
+    double get();
     
-    // Update the fuel when the ship rotates.
-    void burnFuelRotation();
-    
-    // Update the fuel when the thrust is activated.
-    void burnFuelThrust();
 private:
     double fuel;
 };
