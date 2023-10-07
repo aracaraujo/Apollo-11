@@ -4,6 +4,7 @@
 //
 //  Created by Ara Cantanhede Araujo on 10/6/23.
 //
+#pragma once
 
 #ifndef fuel_hpp
 #define fuel_hpp

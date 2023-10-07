@@ -4,6 +4,7 @@
 //
 //  Created by Ara Cantanhede Araujo on 10/6/23.
 //
+#pragma once
 
 #include "star.hpp"
 #include "point.h"
@@ -29,18 +30,8 @@ Point Star::getPosition(){
     return this->position;
 }
 
-// Set width.
-void Star::setWidth(int newWidth){
-    this->width = newWidth;
-}
-
-// Get width.
-int Star::getWidth(){
-    return this->width;
-}
-
 // Set phase.
-void Star::setPhase(int newPhase){
+void Star::setPhase(unsigned char newPhase){
     this->phase = newPhase;
 }
 
@@ -49,5 +40,7 @@ unsigned char Star::getPhase(){
     return this->phase;
 }
 
-
+void Star::incrementPhase(){
+    this->phase = getPhase() + 1;
+}
 

@@ -11,10 +11,16 @@
 
 #include <cmath> // For cos and sin functions.
 
-// Default constructor
+/************************************************************************
+ * VELOCITY  constructor
+ * Create a new velocity object.
+ ************************************************************************/
 Velocity::Velocity() : verticalVelocity(0.0), horizontalVelocity(0.0), totalVelocity(0.0) {}
 
-// Non-default constructor
+/************************************************************************
+ * VELOCITY  constructor
+ * Non-default constructor.
+ ************************************************************************/
 Velocity::Velocity(double verticalVelocity, double horizontalVelocity, double totalVelocity) {
     this->verticalVelocity = verticalVelocity;
     this->horizontalVelocity = horizontalVelocity;

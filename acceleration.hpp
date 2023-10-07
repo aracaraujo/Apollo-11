@@ -4,10 +4,10 @@
 //
 //  Created by Arã Araújo on 10/5/23.
 //
+#pragma once
 
 #ifndef acceleration_hpp
 #define acceleration_hpp
-#pragma once
 
 #include <stdio.h>
 #include "angle.h"

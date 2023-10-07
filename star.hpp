@@ -4,6 +4,7 @@
 //
 //  Created by Ara Cantanhede Araujo on 10/6/23./Users/wadewithers/Desktop/Fall 2023/Encapsulation Design/Apollo-11/acceleration.hpp
 //
+#pragma once
 
 #ifndef star_hpp
 #define star_hpp
@@ -28,22 +29,17 @@ public:
     // Get Position.
     Point getPosition();
     
-    // Set width.
-    void setWidth(int newWidth);
-    
-    // Get width.
-    int getWidth();
-    
     // Set phase.
-    void setPhase(int newPhase);
+    void setPhase(unsigned char newPhase);
     
     // Get Position.
     unsigned char  getPhase();
     
+    // Increment phase;
+    void incrementPhase();
+    
 private:
     Point position;
     
-    int width = 5;
-    
-     unsigned char phase;
+    unsigned char phase;
 };

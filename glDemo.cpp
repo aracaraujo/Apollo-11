@@ -10,6 +10,7 @@
 #include "ground.h"
 #include "angle.h"
 #include "lander.hpp"
+#include "star.hpp"
 
 using namespace std;
 
@@ -24,11 +25,27 @@ public:
           angle(Angle()),
           ptStar(ptUpperRight.getX() - 20.0, ptUpperRight.getY() - 20.0),
           ptLM(ptUpperRight.getX() / 2.0, ptUpperRight.getY() / 2.0),
-          ground(ptUpperRight)
-   { 
+          ground(ptUpperRight), lander(ptLM), stars(createStars())
+   {
 
       phase = random(0, 255);
    }
+    
+    // This function will return a vector that contains 50 stars.
+    vector<Star> createStars(){
+        vector<Star> stars;
+        
+        while(stars.size() < 50){
+            Point position = Point(random(10,390),random(10,390));
+            // Checking that the position is not on the ground.
+            if (!ground.hitGround(position, 1)){
+                unsigned char phase = random(0,255);
+                Star star = Star(position,phase);
+                stars.push_back(star);
+            }
+        }
+        return stars;
+    }
 
    // this is just for test purposes.  Don't make member variables public!
    Point ptLM;           // location of the LM on the screen
@@ -37,10 +54,10 @@ public:
    unsigned char phase;  // phase of the star's blinking
    Ground ground;
    Point ptStar;
-   Lander lander = Lander(ptLM);
+   Lander lander;
+   vector<Star> stars;
 
 };
-
 /*************************************
  * All the interesting work happens here, when
  * I get called back from OpenGL to draw a frame.
@@ -50,6 +67,7 @@ public:
  **************************************/
 void callBack(const Interface *pUI, void * p)
 {
+    
    ogstream gout;
 
    // the first step is to cast the void pointer into a game object. This
@@ -58,7 +76,6 @@ void callBack(const Interface *pUI, void * p)
 
    // move the ship around
     if (pUI->isRight()){
-        
         pDemo->lander.rotateLander(0.1);
     }
     if (pUI->isLeft()){
@@ -66,10 +83,8 @@ void callBack(const Interface *pUI, void * p)
     }
    if (pUI->isUp())
        pDemo->lander.moveUp();
-//      pDemo->ptLM.addY(-1.0);
    if (pUI->isDown())
        pDemo->lander.moveDown();
-//      pDemo->ptLM.addY(1.0);
 
    // draw the ground
    pDemo->ground.draw(gout);
@@ -87,12 +102,16 @@ void callBack(const Interface *pUI, void * p)
    gout.setPosition(Point(20.0, 350.0));
    gout << "Altitude: " << pDemo->lander.getPosition().getY() << " meters" << "\n";
     
-   // Dispaly Altitude on screen
+   // Display Altitude on screen
    gout.setPosition(Point(20.0, 330.0));
    gout << "Speed: " << 12 << " m/s" << "\n";
+    
+    // Draw the stars in the sky.
+    for (auto &star : pDemo->stars){
+        star.incrementPhase();
+        gout.drawStar(star.getPosition(), star.getPhase());
+    }
 
-   // draw our little star
-   gout.drawStar(pDemo->ptStar, pDemo->phase++);
 }
 
 /*********************************

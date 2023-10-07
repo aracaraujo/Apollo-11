@@ -155,9 +155,3 @@ double Acceleration::computeHorizontalAcceleration(double radians){
     // Returning vertical component.
     return horizontalComponent;
 }
-
-/*
- - Should the vertical and horizontal acceleration update automatic
- as the acceleration is updated?
- - Do we initialize the acceleration to gravity?
- */
