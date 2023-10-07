@@ -59,10 +59,10 @@ void callBack(const Interface *pUI, void * p)
    // move the ship around
     if (pUI->isRight()){
         
-        pDemo->lander.rotateLander(-0.1);
+        pDemo->lander.rotateLander(0.1);
     }
     if (pUI->isLeft()){
-        pDemo->lander.rotateLander(0.1);
+        pDemo->lander.rotateLander(-0.1);
     }
    if (pUI->isUp())
        pDemo->lander.moveUp();
