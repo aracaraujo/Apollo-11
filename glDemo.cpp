@@ -38,6 +38,7 @@ public:
    Ground ground;
    Point ptStar;
    Lander lander = Lander(ptLM);
+
 };
 
 /*************************************
@@ -74,13 +75,21 @@ void callBack(const Interface *pUI, void * p)
    pDemo->ground.draw(gout);
 
    // draw the lander and its flames
-    gout.drawLander(pDemo->lander.getPosition() /*position*/, pDemo->lander.getAngle().getRadians() /*angle*/);
+   gout.drawLander(pDemo->lander.getPosition() /*position*/, pDemo->lander.getAngle().getRadians() /*angle*/);
    gout.drawLanderFlames(pDemo->lander.getPosition(), pDemo->lander.getAngle().getRadians(), /*angle*/
                     pUI->isDown(), pUI->isLeft(), pUI->isRight());
 
-   // put some text on the screen
-   gout.setPosition(Point(30.0, 30.0));
-   gout << "Demo (" << (int)pDemo->lander.getPosition().getX() << ", " << (int)pDemo->lander.getPosition().getY() << ")" << "\n";
+   // Display fuel on screen.
+   gout.setPosition(Point(20.0, 370.0));
+   gout << "Fuel: " << pDemo->lander.getTank().get() << " lbs" << "\n";
+    
+   // Dispaly Altitude on screen
+   gout.setPosition(Point(20.0, 350.0));
+   gout << "Altitude: " << pDemo->lander.getPosition().getY() << " meters" << "\n";
+    
+   // Dispaly Altitude on screen
+   gout.setPosition(Point(20.0, 330.0));
+   gout << "Speed: " << 12 << " m/s" << "\n";
 
    // draw our little star
    gout.drawStar(pDemo->ptStar, pDemo->phase++);

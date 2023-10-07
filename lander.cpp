@@ -33,12 +33,15 @@ Angle Lander::getAngle() {
     return angle;
 }
 
-Fuel getTank();
+Fuel Lander::getTank() {
+    return tank;
+}
 
 void Lander::setPosition(Point position) {
     this->position = position;
 }
 
+// Setters
 void setAcceleration(Acceleration acceleration);
 void setVelocity(Velocity velocity);
 void Lander::setAngle(Angle angle) {
