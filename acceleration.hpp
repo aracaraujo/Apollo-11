@@ -29,7 +29,7 @@ public:
     Acceleration(double force, double mass, Angle angle);
     
     // Set acceleration.
-    void setAcceleration(double acceleration);
+    void setAcceleration(double acceleration, Angle angle);
     
     // Get acceleration.
     double getAcceleration();
@@ -64,6 +64,8 @@ private:
      */
     double computeHorizontalAcceleration(double radians);
     
+    // Angle class
+    Angle angle;
     // This is the total acceleration.
     double acceleration;
     

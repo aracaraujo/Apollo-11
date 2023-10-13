@@ -7,10 +7,11 @@
 
 #include "acceleration.hpp"
 #include <cmath>
+#define GRAVITY -1.625
 
 
 Acceleration::Acceleration(){
-    setAcceleration(0.0);
+    setAcceleration(GRAVITY, Angle(0.0));
     setVerticalAcceleration(Angle());
     
     // Set horizontal accelertaion.
@@ -23,7 +24,7 @@ Acceleration::Acceleration(){
  ************************************************************************/
 Acceleration::Acceleration(Angle angle){
     // Set acceleration.
-    setAcceleration(0.0);
+    setAcceleration(GRAVITY, angle);
     
     // Set vertical acceleration.
     setVerticalAcceleration(angle);
@@ -41,7 +42,7 @@ Acceleration::Acceleration(double force, double mass, Angle angle){
     double computedAcceleration = force / mass;
     
     // Set acceleration.
-    setAcceleration(computedAcceleration);
+    setAcceleration(computedAcceleration, angle);
     
     // Set vertical acceleration.
     setVerticalAcceleration(angle);
@@ -54,9 +55,11 @@ Acceleration::Acceleration(double force, double mass, Angle angle){
  * SET ACCELERATION
  * This is method will set a new value to acceleration.
  ************************************************************************/
-void Acceleration::setAcceleration(double acceleration){
+void Acceleration::setAcceleration(double acceleration, Angle angle){
     // Set acceleration to new value.
     this->acceleration = acceleration;
+    this->setVerticalAcceleration(angle);
+    this->setVerticalAcceleration(angle);
 }
 
 /*********************************************************************

@@ -6,7 +6,9 @@
 //
 
 #include "lander.hpp"
+#include <iostream>
 #define TWO_PI 6.28318530718
+#define TIME 1
 #include <cmath>
 
 /************************************************************************
@@ -42,8 +44,15 @@ Lander::Lander(Point position) {
 Point Lander::getPosition() {
     return position;
 }
-Acceleration getAcceleration();
-Velocity getVelocity();
+
+Acceleration Lander::getAcceleration() {
+    return acceleration;
+}
+
+Velocity Lander::getVelocity() {
+    return velocity;
+}
+
 Angle Lander::getAngle() {
     return angle;
 }
@@ -60,12 +69,21 @@ void Lander::setPosition(Point position) {
     this->position = position;
 }
 
-void setAcceleration(Acceleration acceleration);
-void setVelocity(Velocity velocity);
+void Lander::setAcceleration(Acceleration acceleration) {
+    this->acceleration = acceleration;
+}
+
+void Lander::setVelocity(Velocity velocity) {
+    this->velocity = velocity;
+}
+
 void Lander::setAngle(Angle angle) {
     this->angle = angle;
 }
-void setTank(Fuel tank);
+
+void Lander::setTank(Fuel tank) {
+    this->tank = tank;
+}
 
 /************************************************************************
  * UPDATE POSITION
@@ -77,34 +95,68 @@ void updatePosition();
  * UPDATE ACCELERATION
  * This method will update the acceleration of the rocket.
  ************************************************************************/
-void updateAcceleration();
+void Lander::updateAcceleration(double force, double mass) {
+    // New accerleration variable.
+    double newAcceleration;
+
+    // Calculate accerleration in meters/second^2 from second law of motion.
+    newAcceleration = force / mass;
+
+    // Returning acceleration.
+    acceleration.setAcceleration(newAcceleration + acceleration.getAcceleration(), angle);
+}
+
+void Lander::updateVelocity() {
+
+    // Calculating new velocite according to acceleration applied.
+    double newVelocity = velocity.getTotalVelocity() + (acceleration.getAcceleration() * TIME);
+
+    // Returning new velocity.
+    velocity.setTotalVelocity(newVelocity);
+}
 
 /************************************************************************
  * BURN FUEL
  * This method will burn the fuel when the rocket rotates or when the thrust is activated.
  ************************************************************************/
-void burnFuel(double fuel);
+void Lander::burnFuel(double fuelBurned) {
+    double fuelAmount = tank.get();
+    tank.set(fuelAmount - fuelBurned);
+    
+}
 
 /************************************************************************
  * ROTATE LANDER
  * This method will rotate the ship by updating the angle.
  ************************************************************************/
 void Lander::rotateLander(double angle) {
-    double currentRadians = this->angle.getRadians();
-    this->angle.setRadians(currentRadians - angle);
+    if (tank.get() >= 1) {
+        double currentRadians = this->angle.getRadians();
+        this->angle.setRadians(currentRadians - angle);
+        burnFuel(1);
+    }
 }
 
 /************************************************************************
  * COMPUTE DISTANCE.
  * This method will compute the distance that the rocket moved given a speed.
  ************************************************************************/
-double computeDistance(double positionComponent, double velocityComponent);
+void Lander::computeDistance() {
+    
+    // Calculate new position.
+    double distanceX = position.getX() + (velocity.getHorizontalVelocity() * 0.1) + (0.5 * acceleration.getHorizontalAcceleration() * (0.1 * 0.1));
+    double distanceY = position.getX() + (velocity.getVerticalVelocity() * 0.1) + (0.5 * acceleration.getVerticalAcceleration() * (0.1 * 0.1));
+    
+    position.setX(distanceX);
+    position.setY(distanceY);
+
+}
 
 /************************************************************************
  * MOVE UP.
  * This method will move the rocket up.
  ************************************************************************/
-void Lander::moveUp(){
+void Lander::moveDown(){
     this->position.addY(-1.0);
 }
 
@@ -112,6 +164,10 @@ void Lander::moveUp(){
  * MOVE DOWN.
  * This method will move the rocket down..
  ************************************************************************/
-void Lander::moveDown(){
-    this->position.addY(1.0);
+void Lander::moveUp(){
+    if (tank.get() >= 10) {
+        this->position.addY(1.0);
+        burnFuel(10);
+    }
+    
 }

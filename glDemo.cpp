@@ -24,6 +24,12 @@
 #include "angle.h"
 #include "lander.hpp"
 #include "star.hpp"
+#include <vector>
+
+#define MASS 15103.000   // Weight of moon lander
+#define GRAVITY -1.625   // Acceleration due to gravity
+#define THRUST 45000.000 // Force due to thrust
+#define TIME 0.1
 
 using namespace std;
 
@@ -90,18 +96,23 @@ void callBack(const Interface *pUI, void * p)
    // move the ship around
     if (pUI->isRight()){
         pDemo->lander.rotateLander(0.1);
+        
     }
     if (pUI->isLeft()){
         pDemo->lander.rotateLander(-0.1);
     }
    if (pUI->isUp())
-       pDemo->lander.moveUp();
-   if (pUI->isDown())
        pDemo->lander.moveDown();
+    if (pUI->isDown()) {
+        //pDemo->lander.moveUp();
+        pDemo->lander.updateAcceleration(THRUST, MASS);
+        pDemo->lander.updateVelocity();
+    }
+    pDemo->lander.computeDistance();
 
    // draw the ground
    pDemo->ground.draw(gout);
-
+    
    // draw the lander and its flames
    gout.drawLander(pDemo->lander.getPosition() /*position*/, pDemo->lander.getAngle().getRadians() /*angle*/);
    gout.drawLanderFlames(pDemo->lander.getPosition(), pDemo->lander.getAngle().getRadians(), /*angle*/
@@ -111,14 +122,18 @@ void callBack(const Interface *pUI, void * p)
    gout.setPosition(Point(20.0, 370.0));
    gout << "Fuel: " << pDemo->lander.getTank().get() << " lbs" << "\n";
     
-   // Dispaly Altitude on screen
+   // Dispaly Altitude on screen.
    gout.setPosition(Point(20.0, 350.0));
    gout << "Altitude: " << pDemo->lander.getPosition().getY() << " meters" << "\n";
     
-   // Display Altitude on screen
+   // Display Speed on screen.
    gout.setPosition(Point(20.0, 330.0));
    gout << "Speed: " << 12 << " m/s" << "\n";
     
+    gout.setPosition(Point(20.0, 200));
+    gout << pDemo->lander.getAcceleration().getAcceleration() << "\n";
+    gout.setPosition(Point(20.0, 100));
+    gout << pDemo->lander.getVelocity().getTotalVelocity() << "\n";
     // Draw the stars in the sky.
     for (auto &star : pDemo->stars){
         star.incrementPhase();

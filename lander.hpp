@@ -55,7 +55,10 @@ public:
     void moveDown();
     
     // Update rocket acceleration.
-    void updateAcceleration();
+    void updateAcceleration(double force, double mass);
+    
+    // Update Velocity
+    void updateVelocity();
     
     // Burn the fuel when rocket rotates or moves.
     void burnFuel(double fuel);
@@ -64,6 +67,6 @@ public:
     void rotateLander(double angle);
     
     // Compute distance that the rocket moved.
-    double computeDistance(double positionComponent, double velocityComponent);
+    void computeDistance();
     
 };
