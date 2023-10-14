@@ -11,11 +11,12 @@
 
 
 Acceleration::Acceleration(){
-    setAcceleration(GRAVITY, Angle(0.0));
-    setVerticalAcceleration(Angle());
+    setAcceleration(0.0);
+    
+    setVerticalAcceleration(GRAVITY);
     
     // Set horizontal accelertaion.
-    setHorizontalAcceleration(Angle());
+    setHorizontalAcceleration(0.0);
 }
 
 /*********************************************************************
@@ -24,13 +25,12 @@ Acceleration::Acceleration(){
  ************************************************************************/
 Acceleration::Acceleration(Angle angle){
     // Set acceleration.
-    setAcceleration(GRAVITY, angle);
+    setAcceleration(0.0);
     
-    // Set vertical acceleration.
-    setVerticalAcceleration(angle);
+    setVerticalAcceleration(computeVerticalAcceleration(0.0,angle.getRadians()));
     
     // Set horizontal accelertaion.
-    setHorizontalAcceleration(angle);
+    setHorizontalAcceleration(computeHorizontalAcceleration(0.0,angle.getRadians()));
 }
 
 /*********************************************************************
@@ -42,24 +42,21 @@ Acceleration::Acceleration(double force, double mass, Angle angle){
     double computedAcceleration = force / mass;
     
     // Set acceleration.
-    setAcceleration(computedAcceleration, angle);
+    setAcceleration(computedAcceleration);
     
-    // Set vertical acceleration.
-    setVerticalAcceleration(angle);
+    setVerticalAcceleration(computeVerticalAcceleration(0.0,angle.getRadians()));
     
     // Set horizontal accelertaion.
-    setHorizontalAcceleration(angle);
+    setHorizontalAcceleration(computeHorizontalAcceleration(0.0,angle.getRadians()));
 }
 
 /*********************************************************************
  * SET ACCELERATION
  * This is method will set a new value to acceleration.
  ************************************************************************/
-void Acceleration::setAcceleration(double acceleration, Angle angle){
+void Acceleration::setAcceleration(double acceleration){
     // Set acceleration to new value.
     this->acceleration = acceleration;
-    this->setVerticalAcceleration(angle);
-    this->setVerticalAcceleration(angle);
 }
 
 /*********************************************************************
@@ -75,15 +72,10 @@ double Acceleration::getAcceleration(){
  * SET VERTICAL ACCELERATION
  * This method will set up the vertical component of the acceleration.
  ************************************************************************/
-void Acceleration::setVerticalAcceleration(Angle angle){
-    // Set vertical componente value.
-    double verticalComponent;
-    
-    // Calculating vertical acceleration.
-    verticalComponent = computeVerticalAcceleration(angle.getRadians());
+void Acceleration::setVerticalAcceleration(double newVerticalComponent){
     
     // Change the vertical acceleration for the new value.
-    this->verticalAcceleration = verticalComponent;
+    this->verticalAcceleration = newVerticalComponent;
 }
 
 /*********************************************************************
@@ -99,15 +91,10 @@ double Acceleration::getVerticalAcceleration(){
  * SET HORIZONTAL ACCELERATION
  * This method will set up the horizontal component of the acceleration.
  ************************************************************************/
-void Acceleration::setHorizontalAcceleration(Angle angle){
-    // Set horizontal component value.
-    double horizontalComponent;
-    
-    // Calculating vertical acceleration.
-    horizontalComponent = computeHorizontalAcceleration(angle.getRadians());
+void Acceleration::setHorizontalAcceleration(double newHorizontalComponent){
     
     // Change the vertical acceleration for the new value.
-    this->horizontalAcceleration = horizontalComponent;
+    this->horizontalAcceleration = newHorizontalComponent;
 }
 
 /*********************************************************************
@@ -120,24 +107,16 @@ double Acceleration::getHorizontalAcceleration(){
 }
 
 /*********************************************************************
- * UPDATE ACCELERATION DUE THRUST
- * This method will update the acceleration when the thrust is activated.
- ************************************************************************/
-void Acceleration::updateAccelerationDueThrust(){
-    
-}
-
-/*********************************************************************
  * COMPUTE VERTICAL ACCELERATION
  * This method will calculate the vertical componente of the acceleration.
  ************************************************************************/
-double Acceleration::computeVerticalAcceleration(double radians){
+double Acceleration::computeVerticalAcceleration(double acceleration, double radians){
     
     // Vertical component.
     double vertialComponent;
     
     // Calculate vertical component.
-    vertialComponent = cos(radians) * this->acceleration;
+    vertialComponent = (cos(-radians) * acceleration);
     
     // Returning vertical component.
     return vertialComponent;
@@ -147,13 +126,13 @@ double Acceleration::computeVerticalAcceleration(double radians){
  * COMPUTE HORIZONTAL ACCELERATION
  * This method will calculate the horizontal componente of the acceleration.
  ************************************************************************/
-double Acceleration::computeHorizontalAcceleration(double radians){
+double Acceleration::computeHorizontalAcceleration(double acceleration, double radians){
     
     // Vertical component.
     double horizontalComponent;
     
     // Calculate vertical component.
-    horizontalComponent = sin(radians) * this->acceleration;
+    horizontalComponent = sin(-radians) * acceleration;
     
     // Returning vertical component.
     return horizontalComponent;

@@ -8,7 +8,10 @@
 #include "lander.hpp"
 #include <iostream>
 #define TWO_PI 6.28318530718
-#define TIME 1
+#define TIME 0.1
+#define MASS 15103.000   // Weight of moon lander
+#define GRAVITY -1.625   // Acceleration due to gravity
+#define THRUST 45000.000 // Force due to thrust
 #include <cmath>
 
 /************************************************************************
@@ -95,24 +98,39 @@ void updatePosition();
  * UPDATE ACCELERATION
  * This method will update the acceleration of the rocket.
  ************************************************************************/
-void Lander::updateAcceleration(double force, double mass) {
-    // New accerleration variable.
-    double newAcceleration;
-
+void Lander::updateAccelerationDueThrust() {
+    
     // Calculate accerleration in meters/second^2 from second law of motion.
-    newAcceleration = force / mass;
+    double newAcceleration = THRUST / MASS;
+    
+    acceleration.setVerticalAcceleration(acceleration.getVerticalAcceleration() + acceleration.computeVerticalAcceleration(newAcceleration,angle.getRadians()));
+    
+    acceleration.setHorizontalAcceleration(acceleration.getHorizontalAcceleration() + acceleration.computeHorizontalAcceleration(newAcceleration,angle.getRadians()));
+    
+}
 
-    // Returning acceleration.
-    acceleration.setAcceleration(newAcceleration + acceleration.getAcceleration(), angle);
+void Lander::updateAccelerationDueGravity(){
+    acceleration.setVerticalAcceleration(acceleration.getVerticalAcceleration() + GRAVITY);
+}
+
+void Lander::updateHorizontalAcceleration(double newAcceleration) {
+    acceleration.setHorizontalAcceleration(newAcceleration);
+}
+
+void Lander::resetToGravity(){
+    acceleration.setVerticalAcceleration(GRAVITY);
 }
 
 void Lander::updateVelocity() {
-
-    // Calculating new velocite according to acceleration applied.
-    double newVelocity = velocity.getTotalVelocity() + (acceleration.getAcceleration() * TIME);
+    
+    double newVerticalVelocity = velocity.computeVerticalVelocity(acceleration.getVerticalAcceleration());
+    
+    double newHorizontalVelocity = velocity.computeHorizontalVelocity(acceleration.getHorizontalAcceleration());
 
     // Returning new velocity.
-    velocity.setTotalVelocity(newVelocity);
+    velocity.setVerticalVelocity(newVerticalVelocity);
+    
+    velocity.setHorizontalVertical(newHorizontalVelocity);
 }
 
 /************************************************************************
@@ -143,10 +161,12 @@ void Lander::rotateLander(double angle) {
  ************************************************************************/
 void Lander::computeDistance() {
     
-    // Calculate new position.
+//     Calculate new position.
     double distanceX = position.getX() + (velocity.getHorizontalVelocity() * 0.1) + (0.5 * acceleration.getHorizontalAcceleration() * (0.1 * 0.1));
-    double distanceY = position.getX() + (velocity.getVerticalVelocity() * 0.1) + (0.5 * acceleration.getVerticalAcceleration() * (0.1 * 0.1));
+    double distanceY = position.getY() + (velocity.getVerticalVelocity() * 0.1) + (0.5 * acceleration.getVerticalAcceleration() * (0.1 * 0.1));
     
+    std::cout << distanceX << endl;
+    std::cout << distanceX << endl;
     position.setX(distanceX);
     position.setY(distanceY);
 
@@ -166,8 +186,11 @@ void Lander::moveDown(){
  ************************************************************************/
 void Lander::moveUp(){
     if (tank.get() >= 10) {
-        this->position.addY(1.0);
+//        this->position.addY(1.0);
         burnFuel(10);
     }
-    
+}
+
+void Lander::setAccelerationtoGravity(){
+    acceleration.setAcceleration(GRAVITY);
 }

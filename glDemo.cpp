@@ -90,9 +90,15 @@ void callBack(const Interface *pUI, void * p)
    ogstream gout;
 
    // the first step is to cast the void pointer into a game object. This
-   // is the first step of every single callback function in OpenGL. 
-   Demo * pDemo = (Demo *)p;  
-
+   // is the first step of every single callback function in OpenGL.
+   Demo * pDemo = (Demo *)p;
+    
+    pDemo->lander.updateHorizontalAcceleration(0.0);
+    if (pDemo->lander.getAcceleration().getVerticalAcceleration() > 0){
+        pDemo->lander.updateAccelerationDueGravity();
+    }else{
+        pDemo->lander.resetToGravity();
+    }
    // move the ship around
     if (pUI->isRight()){
         pDemo->lander.rotateLander(0.1);
@@ -104,10 +110,12 @@ void callBack(const Interface *pUI, void * p)
    if (pUI->isUp())
        pDemo->lander.moveDown();
     if (pUI->isDown()) {
-        //pDemo->lander.moveUp();
-        pDemo->lander.updateAcceleration(THRUST, MASS);
-        pDemo->lander.updateVelocity();
+        pDemo->lander.burnFuel(10);
+        pDemo->lander.updateAccelerationDueThrust();
+        
     }
+    
+    pDemo->lander.updateVelocity();
     pDemo->lander.computeDistance();
 
    // draw the ground
@@ -131,9 +139,16 @@ void callBack(const Interface *pUI, void * p)
    gout << "Speed: " << 12 << " m/s" << "\n";
     
     gout.setPosition(Point(20.0, 200));
-    gout << pDemo->lander.getAcceleration().getAcceleration() << "\n";
-    gout.setPosition(Point(20.0, 100));
-    gout << pDemo->lander.getVelocity().getTotalVelocity() << "\n";
+    gout << "Vertical Acceleration: "<< pDemo->lander.getAcceleration().getVerticalAcceleration() << "\n";
+    gout.setPosition(Point(20.0, 175));
+    gout <<"Horizontal Acceleration: "<< pDemo->lander.getAcceleration().getHorizontalAcceleration() << "\n";
+    gout.setPosition(Point(20.0, 150));
+    gout << "Vertical Velocity: "<< pDemo->lander.getVelocity().getVerticalVelocity() << "\n";
+    gout.setPosition(Point(20.0, 125));
+    gout << "Horizontal Velocity: "<< pDemo->lander.getVelocity().getHorizontalVelocity() << "\n";
+
+//    gout.setPosition(Point(20.0, 100));
+//    gout << pDemo->lander.getVelocity().getTotalVelocity() << "\n";
     // Draw the stars in the sky.
     for (auto &star : pDemo->stars){
         star.incrementPhase();
@@ -150,9 +165,9 @@ void callBack(const Interface *pUI, void * p)
 #ifdef _WIN32_X
 #include <windows.h>
 int WINAPI wWinMain(
-   _In_ HINSTANCE hInstance, 
-   _In_opt_ HINSTANCE hPrevInstance, 
-   _In_ PWSTR pCmdLine, 
+   _In_ HINSTANCE hInstance,
+   _In_opt_ HINSTANCE hPrevInstance,
+   _In_ PWSTR pCmdLine,
    _In_ int nCmdShow)
 #else // !_WIN32
 int main(int argc, char ** argv)
@@ -160,8 +175,8 @@ int main(int argc, char ** argv)
 {
    // Initialize OpenGL
    Point ptUpperRight(400.0, 400.0);
-   Interface ui(0, NULL, 
-                "Open GL Demo", 
+   Interface ui(0, NULL,
+                "Open GL Demo",
                  ptUpperRight);
 
    // Initialize the game class

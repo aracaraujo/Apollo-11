@@ -55,7 +55,9 @@ public:
     void moveDown();
     
     // Update rocket acceleration.
-    void updateAcceleration(double force, double mass);
+    void updateAccelerationDueThrust();
+    
+    void updateAccelerationDueGravity();
     
     // Update Velocity
     void updateVelocity();
@@ -69,4 +71,10 @@ public:
     // Compute distance that the rocket moved.
     void computeDistance();
     
+    void setAccelerationtoGravity();
+    
+    // Set horizontal acceleration to 0
+    void updateHorizontalAcceleration(double acceleration);
+    
+    void resetToGravity();
 };

@@ -29,40 +29,38 @@ public:
     Acceleration(double force, double mass, Angle angle);
     
     // Set acceleration.
-    void setAcceleration(double acceleration, Angle angle);
+    void setAcceleration(double acceleration);
     
     // Get acceleration.
     double getAcceleration();
     
     // Set vertical acceleration.
-    void setVerticalAcceleration(Angle angle);
+    void setVerticalAcceleration(double newVerticalComponent);
     
     // Get vertical acceleration.
     double getVerticalAcceleration();
     
     // Set horizontal acceleration.
-    void setHorizontalAcceleration(Angle angle);
+    void setHorizontalAcceleration(double newHorizontalComponent);
     
     // Get horizontal acceleration.
     double getHorizontalAcceleration();
     
-    // Update acceleration due thrust.
-    void updateAccelerationDueThrust();
-    
-private:
     // Computer vertical componente of the acceleration.
     /*
      This is different then the design because I'm not passing the
      acceleration. We will use the acceleration itself.
      */
-    double computeVerticalAcceleration(double radians);
+    double computeVerticalAcceleration(double acceleration,double radians);
     
     // Compute horizontal componente of the acceleration.
     /*
      This is different then the design because I'm not passing the
      acceleration. We will use the acceleration itself.
      */
-    double computeHorizontalAcceleration(double radians);
+    double computeHorizontalAcceleration(double acceleration, double radians);
+    
+private:
     
     // Angle class
     Angle angle;

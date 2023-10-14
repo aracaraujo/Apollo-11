@@ -11,6 +11,8 @@
 
 #include <cmath> // For cos and sin functions.
 
+#define TIME = 0.1 // Time interval.
+
 /************************************************************************
  * VELOCITY  constructor
  * Create a new velocity object.
@@ -46,32 +48,27 @@ double Velocity::computeVelocityFromAcceleration(Acceleration acceleration, doub
 /************************
 Compute vertical velocity from total velocity and angle.
 ***********************/
-double Velocity::computeVerticalVelocity(Angle angle) {
+double Velocity::computeVerticalVelocity(double verticalAcceleration) {
     
-    // New verticalComponent variable.
-    double verticalVelocity;
 
     // Calculate vertical component.
-    verticalVelocity = cos(angle.getRadians()) * totalVelocity;
+    double newVerticalVelocity = verticalVelocity + (verticalAcceleration * 0.1);
 
     // Returning vertical component.
-    return verticalVelocity;
+    return newVerticalVelocity;
     
 }
 
 /************************
 Compute horizontal velocity from total velocity and angle.
 ***********************/
-double Velocity::computeHorizontalVelocity(Angle angle) {
-    
-    // New verticalVelocity variable.
-    double horizontalVelocity;
+double Velocity::computeHorizontalVelocity(double horizontalAcceleration) {
 
     // Calculate vertical component.
-    horizontalVelocity = sin(angle.getRadians()) * totalVelocity;
+    double newHorizontalVelocity = horizontalVelocity + (horizontalAcceleration * 0.1);
 
     // Returning horizontal component.
-    return horizontalVelocity;
+    return newHorizontalVelocity;
     
 }
 

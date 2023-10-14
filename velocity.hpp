@@ -29,12 +29,7 @@ private:
     
     // Compute new velocity from an acceleration.
     double computeVelocityFromAcceleration(Acceleration acceleration, double time=1/10);
-    
-    // Compute the vertical component of the velocity.
-    double computeVerticalVelocity(Angle angle);
-    
-    // Compute the horizontal component of the velocity
-    double computeHorizontalVelocity(Angle angle);
+
     
 public:
     
@@ -51,5 +46,11 @@ public:
     double getVerticalVelocity() const;
     double getHorizontalVelocity() const;
     double getTotalVelocity() const;
+    
+    // Compute the vertical component of the velocity.
+    double computeVerticalVelocity(double verticalAcceleration);
+    
+    // Compute the horizontal component of the velocity
+    double computeHorizontalVelocity(double horizontalAcceleration);
     
 };
