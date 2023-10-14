@@ -53,4 +53,7 @@ public:
     // Compute the horizontal component of the velocity
     double computeHorizontalVelocity(double horizontalAcceleration);
     
+    // Compute total velocity.
+    double computeTotalVelocity();
+    
 };

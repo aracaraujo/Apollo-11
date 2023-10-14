@@ -15,12 +15,12 @@
 #include <cmath>
 
 /************************************************************************
- * GROUND constructor
- * Ground default constructor.
+ * LANDER constructor
+ * Lander default constructor.
  ************************************************************************/
 Lander::Lander() {
     // Setting up all the properties.
-    this->position = Point(0.0, 0.0);
+    this->position = Point(0.0, 400.0);
     this->angle = Angle();
     this->acceleration = Acceleration();
     this->velocity = Velocity();
@@ -28,8 +28,8 @@ Lander::Lander() {
 }
 
 /************************************************************************
- * GROUND constructor
- * Ground non-default constructor
+ * LANDER constructor
+ * Lander non-default constructor
  ************************************************************************/
 Lander::Lander(Point position) {
     // Setting up all the properties.

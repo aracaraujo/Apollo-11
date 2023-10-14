@@ -62,6 +62,7 @@ public:
     // Update Velocity
     void updateVelocity();
     
+    
     // Burn the fuel when rocket rotates or moves.
     void burnFuel(double fuel);
     

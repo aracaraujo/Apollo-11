@@ -72,6 +72,16 @@ double Velocity::computeHorizontalVelocity(double horizontalAcceleration) {
     
 }
 
+double Velocity::computeTotalVelocity() {
+    
+    // Calculate total velocity using pythagorean theorem.
+    // Must be a positive number or will return a domain error.
+    double totalVelocity = sqrt((horizontalVelocity * horizontalVelocity) + (verticalVelocity * verticalVelocity));
+
+    // returning total component
+    return totalVelocity;
+}
+
 // Setters
 void Velocity::setVerticalVelocity(double verticalVelocity) {
     this->verticalVelocity = verticalVelocity;

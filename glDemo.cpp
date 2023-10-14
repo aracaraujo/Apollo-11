@@ -43,7 +43,7 @@ public:
    Demo(const Point& ptUpperRight) :
           angle(Angle()),
           ptStar(ptUpperRight.getX() - 20.0, ptUpperRight.getY() - 20.0),
-          ptLM(ptUpperRight.getX() / 2.0, ptUpperRight.getY() / 2.0),
+          ptLM(ptUpperRight.getX() / 2.0, ptUpperRight.getY()),
           ground(ptUpperRight), lander(ptLM), stars(createStars())
    {
 
@@ -94,29 +94,34 @@ void callBack(const Interface *pUI, void * p)
    Demo * pDemo = (Demo *)p;
     
     pDemo->lander.updateHorizontalAcceleration(0.0);
-    if (pDemo->lander.getAcceleration().getVerticalAcceleration() > 0){
-        pDemo->lander.updateAccelerationDueGravity();
-    }else{
-        pDemo->lander.resetToGravity();
-    }
-   // move the ship around
-    if (pUI->isRight()){
-        pDemo->lander.rotateLander(0.1);
-        
-    }
-    if (pUI->isLeft()){
-        pDemo->lander.rotateLander(-0.1);
-    }
-   if (pUI->isUp())
-       pDemo->lander.moveDown();
-    if (pUI->isDown()) {
-        pDemo->lander.burnFuel(10);
-        pDemo->lander.updateAccelerationDueThrust();
-        
-    }
+    if (!pDemo->ground.hitGround(pDemo->lander.getPosition(), 20)) {
+        if (pDemo->lander.getAcceleration().getVerticalAcceleration() > 0){
+            pDemo->lander.updateAccelerationDueGravity();
+        }else{
+            pDemo->lander.resetToGravity();
+        }
     
-    pDemo->lander.updateVelocity();
-    pDemo->lander.computeDistance();
+        // move the ship around
+        if (pUI->isRight()){
+            pDemo->lander.rotateLander(0.1);
+        }
+        if (pUI->isLeft()){
+            pDemo->lander.rotateLander(-0.1);
+        }
+        if (pUI->isUp())
+            pDemo->lander.moveDown();
+        if (pUI->isDown()) {
+            pDemo->lander.burnFuel(10);
+            pDemo->lander.updateAccelerationDueThrust();
+        }
+    
+    
+        pDemo->lander.updateVelocity();
+        pDemo->lander.computeDistance();
+    }
+    /*else {
+        pDemo->lander.
+    }*/
 
    // draw the ground
    pDemo->ground.draw(gout);
