@@ -100,12 +100,17 @@ void updatePosition();
  ************************************************************************/
 void Lander::updateAccelerationDueThrust() {
     
-    // Calculate accerleration in meters/second^2 from second law of motion.
-    double newAcceleration = THRUST / MASS;
-    
-    acceleration.setVerticalAcceleration(acceleration.getVerticalAcceleration() + acceleration.computeVerticalAcceleration(newAcceleration,angle.getRadians()));
-    
-    acceleration.setHorizontalAcceleration(acceleration.getHorizontalAcceleration() + acceleration.computeHorizontalAcceleration(newAcceleration,angle.getRadians()));
+    if (tank.get() >= 10) {
+        
+        burnFuel(10);
+        
+        // Calculate accerleration in meters/second^2 from second law of motion.
+        double newAcceleration = THRUST / MASS;
+        
+        acceleration.setVerticalAcceleration(acceleration.getVerticalAcceleration() + acceleration.computeVerticalAcceleration(newAcceleration,angle.getRadians()));
+        
+        acceleration.setHorizontalAcceleration(acceleration.getHorizontalAcceleration() + acceleration.computeHorizontalAcceleration(newAcceleration,angle.getRadians()));
+    }
     
 }
 
@@ -170,6 +175,16 @@ void Lander::computeDistance() {
     position.setX(distanceX);
     position.setY(distanceY);
 
+}
+
+/************************************************************************
+ * GET TOTAL VELOCITY.
+ * This method will get the total velocity from the velocity object.
+ ************************************************************************/
+double Lander::getTotalVelocity() {
+    double totalVelocity = velocity.computeTotalVelocity();
+    
+    return totalVelocity;
 }
 
 /************************************************************************

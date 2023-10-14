@@ -111,11 +111,11 @@ void callBack(const Interface *pUI, void * p)
         if (pUI->isUp())
             pDemo->lander.moveDown();
         if (pUI->isDown()) {
-            pDemo->lander.burnFuel(10);
+            //pDemo->lander.burnFuel(10);
             pDemo->lander.updateAccelerationDueThrust();
         }
     
-    
+        // Update lander's speed and position.
         pDemo->lander.updateVelocity();
         pDemo->lander.computeDistance();
     }
@@ -141,7 +141,7 @@ void callBack(const Interface *pUI, void * p)
     
    // Display Speed on screen.
    gout.setPosition(Point(20.0, 330.0));
-   gout << "Speed: " << 12 << " m/s" << "\n";
+   gout << "Speed: " << pDemo->lander.getTotalVelocity() << " m/s" << "\n";
     
     gout.setPosition(Point(20.0, 200));
     gout << "Vertical Acceleration: "<< pDemo->lander.getAcceleration().getVerticalAcceleration() << "\n";

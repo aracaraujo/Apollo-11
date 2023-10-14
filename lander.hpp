@@ -72,6 +72,9 @@ public:
     // Compute distance that the rocket moved.
     void computeDistance();
     
+    // Get total velocity
+    double getTotalVelocity();
+    
     void setAccelerationtoGravity();
     
     // Set horizontal acceleration to 0
