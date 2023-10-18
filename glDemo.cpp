@@ -43,7 +43,7 @@ public:
    Demo(const Point& ptUpperRight) :
           angle(Angle()),
           ptStar(ptUpperRight.getX() - 20.0, ptUpperRight.getY() - 20.0),
-          ptLM(ptUpperRight.getX() / 2.0, ptUpperRight.getY()),
+          ptLM(random(20,380), ptUpperRight.getY() - 10),
           ground(ptUpperRight), lander(ptLM), stars(createStars())
    {
 
@@ -65,6 +65,22 @@ public:
         }
         return stars;
     }
+    
+   /*************************************
+   This function will take location of the lander and see if it has crashed.
+   if crashed the function will return true. If not the it will return false.
+   If the lander touches the ground, lands on the landing pad with
+   speed > 4.0m/s, or lands with angle not between 8/pi or -8/pi then
+   the lander has crashed.
+   *************************************/
+   bool isLanded() {
+       
+       if (ground.onPlatform(lander.getPosition(), 20) && lander.getTotalVelocity() <= 4) {
+           return true;
+       }
+       
+       return false;
+   }
 
    // this is just for test purposes.  Don't make member variables public!
    Point ptLM;           // location of the LM on the screen
@@ -100,7 +116,7 @@ void callBack(const Interface *pUI, void * p)
         }else{
             pDemo->lander.resetToGravity();
         }
-    
+        
         // move the ship around
         if (pUI->isRight()){
             pDemo->lander.rotateLander(0.1);
@@ -111,7 +127,6 @@ void callBack(const Interface *pUI, void * p)
         if (pUI->isUp())
             pDemo->lander.moveDown();
         if (pUI->isDown()) {
-            //pDemo->lander.burnFuel(10);
             pDemo->lander.updateAccelerationDueThrust();
         }
     
@@ -119,9 +134,18 @@ void callBack(const Interface *pUI, void * p)
         pDemo->lander.updateVelocity();
         pDemo->lander.computeDistance();
     }
-    /*else {
-        pDemo->lander.
-    }*/
+    else {
+        if (pDemo->isLanded()) {
+            gout.setPosition(Point(200.0, 200.0));
+        gout << "The ship has landed!\n";
+        }
+        else {
+            gout.setPosition(Point(200.0, 200.0));
+            gout << "The ship has Crashed!\n";
+        }
+    }
+        
+    
 
    // draw the ground
    pDemo->ground.draw(gout);
@@ -143,14 +167,14 @@ void callBack(const Interface *pUI, void * p)
    gout.setPosition(Point(20.0, 330.0));
    gout << "Speed: " << pDemo->lander.getTotalVelocity() << " m/s" << "\n";
     
-    gout.setPosition(Point(20.0, 200));
+    /*gout.setPosition(Point(20.0, 200));
     gout << "Vertical Acceleration: "<< pDemo->lander.getAcceleration().getVerticalAcceleration() << "\n";
     gout.setPosition(Point(20.0, 175));
     gout <<"Horizontal Acceleration: "<< pDemo->lander.getAcceleration().getHorizontalAcceleration() << "\n";
     gout.setPosition(Point(20.0, 150));
     gout << "Vertical Velocity: "<< pDemo->lander.getVelocity().getVerticalVelocity() << "\n";
     gout.setPosition(Point(20.0, 125));
-    gout << "Horizontal Velocity: "<< pDemo->lander.getVelocity().getHorizontalVelocity() << "\n";
+    gout << "Horizontal Velocity: "<< pDemo->lander.getVelocity().getHorizontalVelocity() << "\n";*/
 
 //    gout.setPosition(Point(20.0, 100));
 //    gout << pDemo->lander.getVelocity().getTotalVelocity() << "\n";
