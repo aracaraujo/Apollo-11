@@ -152,8 +152,10 @@ void callBack(const Interface *pUI, void * p)
     
    // draw the lander and its flames
    gout.drawLander(pDemo->lander.getPosition() /*position*/, pDemo->lander.getAngle().getRadians() /*angle*/);
-   gout.drawLanderFlames(pDemo->lander.getPosition(), pDemo->lander.getAngle().getRadians(), /*angle*/
-                    pUI->isDown(), pUI->isLeft(), pUI->isRight());
+   if (pDemo->lander.getTank().get() > 0) {
+        gout.drawLanderFlames(pDemo->lander.getPosition(), pDemo->lander.getAngle().getRadians(), /*angle*/
+                              pUI->isDown(), pUI->isLeft(), pUI->isRight());
+   }
 
    // Display fuel on screen.
    gout.setPosition(Point(20.0, 370.0));
