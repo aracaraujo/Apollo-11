@@ -67,11 +67,8 @@ public:
     }
     
    /*************************************
-   This function will take location of the lander and see if it has crashed.
-   if crashed the function will return true. If not the it will return false.
-   If the lander touches the ground, lands on the landing pad with
-   speed > 4.0m/s, or lands with angle not between 8/pi or -8/pi then
-   the lander has crashed.
+      Function to check if lander has landed. If lander hit lander pad
+      at less than 4 m/s then the lander has successfully landed.
    *************************************/
    bool isLanded() {
        
@@ -80,6 +77,7 @@ public:
        }
        
        return false;
+       
    }
 
    // this is just for test purposes.  Don't make member variables public!
@@ -134,16 +132,16 @@ void callBack(const Interface *pUI, void * p)
         pDemo->lander.updateVelocity();
         pDemo->lander.computeDistance();
     }
-    else {
-        if (pDemo->isLanded()) {
-            gout.setPosition(Point(200.0, 200.0));
+    else if (pDemo->isLanded()){
+        gout.setPosition(Point(200.0, 200.0));
         gout << "The ship has landed!\n";
-        }
-        else {
-            gout.setPosition(Point(200.0, 200.0));
-            gout << "The ship has Crashed!\n";
-        }
+    
     }
+    else {
+        gout.setPosition(Point(200.0, 200.0));
+        gout << "The ship has Crashed!\n";
+    }
+    
         
     
 
